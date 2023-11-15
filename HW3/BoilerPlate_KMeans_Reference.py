@@ -1,7 +1,7 @@
 import math
 import random
 import time
-from Tkinter import *
+from tkinter import *
 
 ######################################################################
 # This section contains functions for loading CSV (comma separated values)
@@ -176,13 +176,13 @@ def repeatedKMeans(instances, k, n):
     bestClustering = {}
     bestClustering["withinss"] = float("inf")
     for i in range(1, n+1):
-        print "k-means trial %d," % i ,
+        print("k-means trial %d," % i)
         trialClustering = kmeans(instances, k)
-        print "withinss: %.1f" % trialClustering["withinss"]
+        print("withinss: %.1f" % trialClustering["withinss"])
         if trialClustering["withinss"] < bestClustering["withinss"]:
             bestClustering = trialClustering
             minWithinssTrial = i
-    print "Trial with minimum withinss:", minWithinssTrial
+    print ("Trial with minimum withinss:", minWithinssTrial)
     return bestClustering
 
 
@@ -197,7 +197,7 @@ def printTable(instances):
             line = instance[0] + "\t"
             for i in range(1, len(instance)):
                 line += "%.2f " % instance[i]
-            print line
+            print (line)
 
 def extractAttribute(instances, index):
     result = []
@@ -220,8 +220,8 @@ def drawPoints(canvas, instances, color, shape):
     minY = canvas.data["minY"]
     maxX = canvas.data["maxX"]
     maxY = canvas.data["maxY"]
-    scaleX = float(width - 2*margin) / (maxX - minX)
-    scaleY = float(height - 2*margin) / (maxY - minY)
+    scaleX = float(width - 2*margin) / ((maxX - minX) + 1)
+    scaleY = float(height - 2*margin) / ((maxY - minY) + 1)
     for instance in instances:
         x = 5*(random.random()-0.5)+margin+(instance[1]-minX)*scaleX
         y = 5*(random.random()-0.5)+height-margin-(instance[2]-minY)*scaleY
@@ -239,8 +239,8 @@ def connectPoints(canvas, instances1, instances2, color):
     minY = canvas.data["minY"]
     maxX = canvas.data["maxX"]
     maxY = canvas.data["maxY"]
-    scaleX = float(width - 2*margin) / (maxX - minX)
-    scaleY = float(height - 2*margin) / (maxY - minY)
+    scaleX = float(width - 2*margin) / ((maxX - minX) + 1)
+    scaleY = float(height - 2*margin) / ((maxY - minY) + 1)
     for p1 in instances1:
         for p2 in instances2:
             x1 = margin + (p1[1]-minX)*scaleX
@@ -340,7 +340,7 @@ def paintClusters2D(canvas, clusters, centroids, title=""):
 # Test code
 ######################################################################
 
-dataset = loadCSV("/Users/yanjiefu/Downloads/tshirts-G.csv")
+dataset = loadCSV("../data/kmeans_data/data.csv")
 showDataset2D(dataset)
 clustering = kmeans(dataset, 3, True)
 printTable(clustering["centroids"])
